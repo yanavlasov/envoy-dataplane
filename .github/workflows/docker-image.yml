@@ -14,6 +14,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag envoy-dataplane:$(date +%s)
       working-directory: envoy
+    - name: Push the Docker image
+      run: docker push yanavlasovgoogle/envoy-dataplane:$(date +%s)
