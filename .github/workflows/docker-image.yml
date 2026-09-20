@@ -20,7 +20,9 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag envoy-dataplane:$(date +%s)
+      run: docker build . --file Dockerfile --tag envoy-dataplane:latest
       working-directory: envoy
+    - name: Tag the Docker image
+      run: docker tag envoy-dataplane:latest yanavlasovgoogle/envoy-dataplane:latest
     - name: Push the Docker image
-      run: docker push yanavlasovgoogle/envoy-dataplane:$(date +%s)
+      run: docker push yanavlasovgoogle/envoy-dataplane:latest
